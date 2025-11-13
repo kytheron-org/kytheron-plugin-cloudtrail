@@ -3,11 +3,11 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/kytheron-org/kytheron-plugin-framework/listener"
 	pb "github.com/kytheron-org/kytheron-plugin-go/plugin"
 	"google.golang.org/grpc"
 	"log"
 	"math"
-	"net"
 	"os"
 	"os/signal"
 	"syscall"
@@ -17,19 +17,7 @@ func main() {
 	// Start our GRPC server. This receives a RawLog, and
 	// responds with 1-N parsed logs
 	plugin := &cloudtrail{}
-	socket, err := os.CreateTemp(os.Getenv("PLUGIN_UNIX_SOCKET_DIR"), "cloudtrail")
-	if err != nil {
-		log.Fatal(err)
-	}
-	path := socket.Name()
-	if err := socket.Close(); err != nil {
-		log.Fatal(err)
-	}
-	if err := os.Remove(path); err != nil {
-		log.Fatal(err)
-	}
-
-	l, err := net.Listen("unix", path)
+	l, err := listener.NewSocket(os.Getenv("PLUGIN_UNIX_SOCKET_DIR"), "cloudtrail")
 	if err != nil {
 		log.Fatal(err)
 	}
