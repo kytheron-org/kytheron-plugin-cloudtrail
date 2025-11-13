@@ -1,1 +1,3 @@
 kytheron-plugin-cloudtrail
+# Added by goreleaser init:
+dist/

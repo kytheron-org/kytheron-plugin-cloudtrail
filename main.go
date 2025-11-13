@@ -38,9 +38,10 @@ func main() {
 	signal.Notify(sigs, syscall.SIGINT, syscall.SIGTERM)
 	done := make(chan bool, 1)
 
+	var maxMessageSize int = math.MaxInt
 	grpcServer := grpc.NewServer(
-		grpc.MaxSendMsgSize(math.MaxInt64), // 50MB example
-		grpc.MaxRecvMsgSize(math.MaxInt64),
+		grpc.MaxSendMsgSize(maxMessageSize), // 50MB example
+		grpc.MaxRecvMsgSize(maxMessageSize),
 	)
 	pb.RegisterParserPluginServer(grpcServer, plugin)
 
