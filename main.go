@@ -31,6 +31,7 @@ func main() {
 		grpc.MaxSendMsgSize(maxMessageSize), // 50MB example
 		grpc.MaxRecvMsgSize(maxMessageSize),
 	)
+	pb.RegisterPluginServer(grpcServer, plugin)
 	pb.RegisterParserPluginServer(grpcServer, plugin)
 
 	go func() {

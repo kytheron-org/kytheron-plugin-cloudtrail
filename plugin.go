@@ -8,11 +8,12 @@ import (
 
 type cloudtrail struct {
 	pb.UnimplementedParserPluginServer
+	pb.UnimplementedPluginServer
 }
 
 var _ pb.ParserPluginServer = cloudtrail{}
 
-func (c cloudtrail) GetMetadata(ctx context.Context, empty *pb.Empty) (*pb.ParserMetadata, error) {
+func (c cloudtrail) GetMetadata(ctx context.Context, empty *pb.Empty) (*pb.Metadata, error) {
 	return nil, nil
 }
 
