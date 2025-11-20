@@ -25,7 +25,7 @@ func (c cloudtrail) ParseLog(log *pb.RawLog, srv pb.ParserPlugin_ParseLogServer)
 	var payload struct {
 		Records []any
 	}
-	if err := json.Unmarshal(log.Data, &payload); err != nil {
+	if err := json.Unmarshal([]byte(log.Data), &payload); err != nil {
 		return err
 	}
 
@@ -37,7 +37,7 @@ func (c cloudtrail) ParseLog(log *pb.RawLog, srv pb.ParserPlugin_ParseLogServer)
 		if err := srv.Send(&pb.ParsedLog{
 			SourceName: "TBD",
 			SourceType: "cloudtrail",
-			Data:       data,
+			Data:       string(data),
 		}); err != nil {
 			return err
 		}
